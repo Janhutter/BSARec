@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_a100
+#SBATCH --gpus=1
+#SBATCH --job-name=bsarec2
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=9
+
+#SBATCH --time=00:30:00
+#SBATCH --array=1-15 # 420 jobs, 1 for each line of hparam file
+#SBATCH --output=../slurm/slurm_array_testing_%A_%a.out
+
+module purge
+module load 2024
+module load Anaconda3/2024.06-1
+
+# Your job starts in the directory where you call sbatch
+cd ../../src
+
+# Activate your environment
+source activate bsarec
+
+HPARAMS_FILE=~/BSARec/experiments/jobfiles/hparams_padding_experiment.txt
+
+# Run your code
+srun python main.py $(head -$SLURM_ARRAY_TASK_ID $HPARAMS_FILE | tail -1)

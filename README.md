@@ -1,0 +1,132 @@
+# A Systematic Reproducibility Study of BSARec for Sequential Recommendation
+This is the official source code for our Reproducibility paper of ["An Attentive Inductive Bias for Sequential Recommendation beyond the Self-Attention"](https://arxiv.org/abs/2312.10325)
+We provide the codebase for the reproduction and extension of BSARec. Specifically we provide code for the extension of SR models with Padding, the evaluation of high and low frequency models and for fairness and diversity analysis.
+![BSARec_new](fig/pipeline-1.png)
+
+The codebase is largely based on the original repository provided by Shin et al. (2024).
+## File Structure
+
+- `experiments` Contains files to run experiments and generate hyperparameters
+- `fig` Contains figures included in the paper (those not generated from experiments)
+- `src/` Main folder for data and models, training loop found in base of this directory.
+    - `data`    contains data files and preprocessing
+    - `fairness`    contains fairness analyisis code
+    - `model` contains model files for all models used
+    - `visualize` contains code for visualizations
+
+
+## Dataset
+In the experiments, we utilize seven datasets, all stored in the `src/data` folder. 
+- For the Beauty, Sports, Toys, and Yelp datasets, we employed the datasets downloaded from [this repository](https://github.com/Woeee/FMLP-Rec). 
+- For ML-1M and LastFM, we processed the data according to the procedure outlined in [this code](https://github.com/RUCAIBox/CIKM2020-S3Rec/blob/master/data/data_process.py).
+- For MIND, new code was created.
+- The `src/data/*_same_target.npy` files are utilized for training DuoRec and FEARec, both of which incorporate contrastive learning.
+
+## Quick Start
+### Environment Setting
+```
+conda env create -f bsarec_env.yaml
+conda activate bsarec
+```
+
+### How to train Models
+- Note that pretrained model (.pt) and train log file (.log) will saved in `src/output`
+- `train_name`: name for log file and checkpoint file
+```
+python main.py  --data_name [DATASET] \
+                --lr [LEARNING_RATE] \
+                --alpha [ALPHA] \ 
+                --c [C] \
+                --num_attention_heads [N_HEADS] \
+                --train_name [LOG_NAME]
+```
+- Example for Beauty
+```
+python main.py  --data_name Beauty \
+                --lr 0.0005 \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --train_name BSARec_Beauty
+```
+In order to reproduce experiments, users should vary the `data_name` and `train_name` parameters in the appropriate configurations. Additionally, this code also works for padding types, sequence lengths and all other parameters considered in our paper. In order to simplify this process we also provide code for generating hyperparameter tuning and multi-seed experiments. This constructs the input arguments and includes jobfiles that are able to run all projects on a slurm scheduler. This can be found in: `experiments/jobfiles/generate_hparams.py`, and will provide a hparams.txt file to be used in a batch job for a slurm scheduler as seen in `experiments/jobfiles/array_reproduction.job`, or a bash file.
+
+The available datasets are:
+- `ML-1M`
+- `MIND`
+- `Beauty`
+- `Sports_and_Outdoors`
+- `Yelp`
+- `LastFM`
+- `Toys_and_Games` 
+
+The available models are:
+- `BSARec`
+- `BERT4Rec`
+- `Caser`
+- `SASRec`
+- `GRU4Rec`
+- `duoRec`
+- `FeaRec`
+- `SASRec`
+- `FMLPRec`
+- `BSARec_Skip`
+- `BSARec_Wavelet`
+
+Optionally, users can use the following additional relevant flags for the experiments regarding sequence lengths and padding. 
+- `max_seq_length`, Determines the input sequence lenght used for the model.
+- `padding`, Used to define a specific padding type, choose one out of `zero, cyclic, reflect and mirror`
+- `seed`, Used to set the seed used for experiments. 
+
+For all runs we have provided weights and biases integration, which requires users to log in in order to log runs. 
+
+
+### How to test pretrained Model
+- Note that pretrained model (.pt file) must be in `src/output`
+- `load_model`: pretrained model name without .pt
+```
+python main.py  --data_name [DATASET] \
+                --alpha [ALPHA] \ 
+                --c [C] \
+                --num_attention_heads [N_HEADS] \
+                --load_model [PRETRAINED_MODEL_NAME] \
+                --do_eval
+```
+- Example for Beauty
+```
+python main.py  --data_name Beauty \
+                --alpha 0.7 \
+                --c 5 \
+                --num_attention_heads 1 \
+                --load_model BSARec_Beauty_best \
+                --do_eval
+```
+
+Again, this can be done for all combinations of datasets and models. 
+
+### Available Models
+
+We introduce several variants of BSARec, these can be found in the following files
+
+- `src/model/bsarec_skip.py`
+
+    Implementation of BSARec with skip-connection
+- `src/model/bsarec_wavelet.py`
+
+    Implementation of BSARec where Fourier transform is replaced with the Wavelet transform
+
+Our code to introduce padding to models is universal, and can be found in `src/dataset.py`. 
+
+### Visualizations
+After running all models, the code to reproduce visualizations can be found in `src/visualize/`. They are runnable as jupyter notebook, and require running models first, note that relative paths may need to be changed for code to fuction if users do not use a scratch disk to store results. The visualizations per research question can be found in the following files:
+- **RQ1** `main_table.ipynb` contains the code for the main table, and other tables generated
+- **RQ2** `distribution_classes.ipynb`
+- **RQ3** `length_res.ipynb`
+- **RQ4** `~/showcase.ipynb` has a test setup where a user can run training and reproduce the analysis from RQ4.
+
+
+## Bibliography
+Lu, S., Ge, M., Zhang, J., Zhu, W., Li, G., Gu, F.: Filtering with time-frequency analysis: An adaptive
+and lightweight model for sequential recommender systems based on discrete wavelet transform (2025),
+Shin, Y., Choi, J., Wi, H., Park, N.: An attentive inductive bias for sequential recommendation beyond
+the self-attention. In: Proceedings of the AAAI Conference on Artificial Intelligence. vol. 38, pp. 8984–8992 (2024)

@@ -13,7 +13,7 @@ parameters = {
     # 'datasets': ['Beauty', 'Sports_and_Outdoors', 'Toys_and_Games', 'LastFM', 'ML-1M', 'Yelp'],
     'datasets': ['LastFM', 'ML-1M'],
     # 'model_type': ['BSARec', 'BERT4Rec', 'Caser', 'SASRec', 'GRU4Rec', 'duoRec', 'FeaRec', 'SASRec', 'FMLPRec'],
-    'model_type': ['BSARec_Wavelet'],
+    'model_type': ['BSARec_Wavelet', 'BSARec_skip'],
 
 
     # --- Model-specific hyperparameters (can be tuned later) ---

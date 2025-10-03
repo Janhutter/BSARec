@@ -117,13 +117,58 @@ We introduce several variants of BSARec, these can be found in the following fil
 
 Our code to introduce padding to models is universal, and can be found in `src/dataset.py`. 
 
+
+# RQ 1
+Below code is given to generate a `.txt` file with the needed hyperparameters to replicate the main results table.
+```
+python experiments/jobfiles/generate_hparams.py
+
+PARAMS_FILE="hparams_reproduction.txt"
+
+# Loop through each line and run main.py with it
+while IFS= read -r line; do
+    python src/main.py $line
+done < "$PARAMS_FILE"
+```
+
+# RQ 2
+After having run all the models and datasets in RQ1, a set of json files have been outputted, needed to run the visualizations of RQ2. The code to generate the visualizations can be found in `src/visualize/distribution_classes.ipynb`. This notebook will generate Fig 4,5, and 6.
+
+# RQ 3
+Similar to RQ2, these results can be generated after having run all models and datasets in RQ1. The code to generate the visualizations can be found in `src/visualize/length_res.ipynb`. This notebook will generate Fig 7, 8, and 9.
+
+# RQ 4
+To run the experiments for RQ4, users can use the following code in `~/showcase.ipynb` to generate Fig 9. This notebook shows how to run the experiments with different padding. Do checkout `src/dataset.py`, at the `apply_padding` function, to see how padding is applied.
+All runs to generate the results needed for these visualizations can be run with the following code:
+```
+
+# the padding results of Fig 8, Table 4, and Fig 9.
+python experiments/jobfiles/generate_hparams_padding_experiment.py
+
+PARAMS_FILE="hparams_padding_experiment.txt"
+
+while IFS= read -r line; do
+    python src/main.py $line
+done < "$PARAMS_FILE"
+
+# the skip connection vs wavelet results of Fig 7.
+python experiments/jobfiles/generate_hparams_wavelet_experiment.py
+
+PARAMS_FILE="hparams_wavelet_experiment.txt"
+
+while IFS= read -r line; do
+    python src/main.py $line
+done < "$PARAMS_FILE"
+```
+
+
+
 ### Visualizations
 After running all models, the code to reproduce visualizations can be found in `src/visualize/`. They are runnable as jupyter notebook, and require running models first, note that relative paths may need to be changed for code to fuction if users do not use a scratch disk to store results. The visualizations per research question can be found in the following files:
 - **RQ1** `main_table.ipynb` contains the code for the main table, and other tables generated
 - **RQ2** `distribution_classes.ipynb`
 - **RQ3** `length_res.ipynb`
 - **RQ4** `~/showcase.ipynb` has a test setup where a user can run training and reproduce the analysis from RQ4.
-
 
 ## Bibliography
 Lu, S., Ge, M., Zhang, J., Zhu, W., Li, G., Gu, F.: Filtering with time-frequency analysis: An adaptive

@@ -121,9 +121,6 @@ Our code to introduce padding to models is universal, and can be found in `src/d
 # RQ 1
 Below code is given to generate a `.txt` file with the needed hyperparameters to replicate the main results table.
 ```
-conda env create -f bsarec_env.yaml
-conda activate bsarec
-
 python experiments/jobfiles/generate_hparams.py
 
 PARAMS_FILE="hparams_reproduction.txt"

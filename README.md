@@ -1,5 +1,5 @@
 # A Systematic Reproducibility Study of BSARec for Sequential Recommendation
-This is the official source code for our Reproducibility paper of ["An Attentive Inductive Bias for Sequential Recommendation beyond the Self-Attention"](https://arxiv.org/abs/2312.10325)
+This is the official source code for our [Reproducibility paper](https://github.com/Janhutter/BSARec/blob/main/ECIR_2026_Reproduction_BSARec-Including_Appendix.pdf) of ["An Attentive Inductive Bias for Sequential Recommendation beyond the Self-Attention"](https://arxiv.org/abs/2312.10325)
 We provide the codebase for the reproduction and extension of BSARec. Specifically we provide code for the extension of SR models with Padding, the evaluation of high and low frequency models and for fairness and diversity analysis.
 ![BSARec_new](fig/pipeline-1.png)
 

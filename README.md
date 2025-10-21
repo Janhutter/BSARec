@@ -1,9 +1,10 @@
 # A Systematic Reproducibility Study of BSARec for Sequential Recommendation
-This is the official source code for our Reproducibility paper of ["An Attentive Inductive Bias for Sequential Recommendation beyond the Self-Attention"](https://arxiv.org/abs/2312.10325)
+This is the official source code for our Reproducibility paper of ["An Attentive Inductive Bias for Sequential Recommendation beyond the Self-Attention"](https://arxiv.org/abs/2312.10325).
 We provide the codebase for the reproduction and extension of BSARec. Specifically we provide code for the extension of SR models with Padding, the evaluation of high and low frequency models.
 ![BSARec_new](fig/pipeline-1.png)
 
-The codebase is largely based on the original repository provided by Shin et al. (2024).
+The codebase is largely based on the [official repository](https://github.com/yehjin-shin/BSARec) for BSARec provided by Shin et al. (2024).
+
 ## File Structure
 
 - `experiments` Contains files to run experiments and generate hyperparameters
@@ -12,7 +13,6 @@ The codebase is largely based on the original repository provided by Shin et al.
     - `data`    contains data files and preprocessing
     - `model` contains model files for all models used
     - `visualize` contains code for visualizations
-
 
 ## Dataset
 In the experiments, we utilize seven datasets, all stored in the `src/data` folder. 
@@ -169,8 +169,26 @@ After running all models, the code to reproduce visualizations can be found in `
 - **RQ3** `length_res.ipynb`
 - **RQ4** `~/showcase.ipynb` has a test setup where a user can run training and reproduce the analysis from RQ4.
 
-## Bibliography
-Lu, S., Ge, M., Zhang, J., Zhu, W., Li, G., Gu, F.: Filtering with time-frequency analysis: An adaptive
-and lightweight model for sequential recommender systems based on discrete wavelet transform (2025),
-Shin, Y., Choi, J., Wi, H., Park, N.: An attentive inductive bias for sequential recommendation beyond
-the self-attention. In: Proceedings of the AAAI Conference on Artificial Intelligence. vol. 38, pp. 8984–8992 (2024)
+## References
+```bibtex
+@inproceedings{DBLP:conf/aaai/Shin0WP24,
+  author       = {Yehjin Shin and
+                  Jeongwhan Choi and
+                  Hyowon Wi and
+                  Noseong Park},
+  editor       = {Michael J. Wooldridge and
+                  Jennifer G. Dy and
+                  Sriraam Natarajan},
+  title        = {An Attentive Inductive Bias for Sequential Recommendation beyond the
+                  Self-Attention},
+  booktitle    = {Thirty-Eighth {AAAI} Conference on Artificial Intelligence, {AAAI}
+                  2024, Thirty-Sixth Conference on Innovative Applications of Artificial
+                  Intelligence, {IAAI} 2024, Fourteenth Symposium on Educational Advances
+                  in Artificial Intelligence, {EAAI} 2014, February 20-27, 2024, Vancouver,
+                  Canada},
+  pages        = {8984--8992},
+  publisher    = {{AAAI} Press},
+  year         = {2024},
+  doi          = {10.1609/AAAI.V38I8.28747}
+}
+```

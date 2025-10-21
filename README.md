@@ -29,15 +29,16 @@ conda activate bsarec
 ```
 
 ### How to train Models
-- Note that pretrained model (.pt) and train log file (.log) will saved in `src/output`
-- `train_name`: name for log file and checkpoint file
+- Note that the pretrained model (.pt) and the train log file (.log) will be saved in `src/output`
+- `train_name`: name for the log file and the checkpoint file
 ```
 python main.py  --data_name [DATASET] \
                 --lr [LEARNING_RATE] \
                 --alpha [ALPHA] \ 
                 --c [C] \
                 --num_attention_heads [N_HEADS] \
-                --train_name [LOG_NAME]
+                --train_name [LOG_NAME] \
+                --model_type BSARec
 ```
 - Example for Beauty
 ```
@@ -46,7 +47,8 @@ python main.py  --data_name Beauty \
                 --alpha 0.7 \
                 --c 5 \
                 --num_attention_heads 1 \
-                --train_name BSARec_Beauty
+                --train_name BSARec_Beauty \
+                --model_type BSARec
 ```
 In order to reproduce experiments, users should vary the `data_name` and `train_name` parameters in the appropriate configurations. Additionally, this code also works for padding types, sequence lengths and all other parameters considered in our paper. In order to simplify this process we also provide code for generating hyperparameter tuning and multi-seed experiments. This constructs the input arguments and includes jobfiles that are able to run all projects on a slurm scheduler. This can be found in: `experiments/jobfiles/generate_hparams.py`, and will provide a hparams.txt file to be used in a batch job for a slurm scheduler as seen in `experiments/jobfiles/array_reproduction.job`, or a bash file.
 
@@ -112,7 +114,7 @@ We introduce several variants of BSARec, these can be found in the following fil
     Implementation of BSARec with skip-connection
 - `src/model/bsarec_wavelet.py`
 
-    Implementation of BSARec where Fourier transform is replaced with the Wavelet transform
+    Implementation of BSARec where the Fourier transform is replaced with the Wavelet transform
 
 Our code to introduce padding to models is universal, and can be found in `src/dataset.py`. 
 

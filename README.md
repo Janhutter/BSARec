@@ -173,6 +173,17 @@ After running all models, the code to reproduce visualizations can be found in `
 
 ## References
 ```bibtex
+@misc{hutter2025systematicreproducibilitystudybsarec,
+      title={A Systematic Reproducibility Study of BSARec for Sequential Recommendation}, 
+      author={Jan Hutter and Hua Chang Bakker and Stan Fris and Madelon Bernardy and Yuanna Liu},
+      year={2025},
+      eprint={2512.17442},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2512.17442}, 
+}
+```
+```bibtex
 @inproceedings{DBLP:conf/aaai/Shin0WP24,
   author       = {Yehjin Shin and
                   Jeongwhan Choi and
